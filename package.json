@@ -1,0 +1,25 @@
+{
+  "name": "algorithms-in-typescript",
+  "version": "1.0.0",
+  "description": "Different kinds of algorithem in TypeScript",
+  "main": "index.js",
+  "dependencies": {
+    "tape": "^4.8.0",
+    "ts-node": "^4.1.0",
+    "typescript": "^2.7.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "ts-node node_modules/tape/bin/tape src/**/*.spec.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pashtunzoy/algorithms-in-TypeScript.git"
+  },
+  "author": "Asif Norzai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pashtunzoy/algorithms-in-TypeScript/issues"
+  },
+  "homepage": "https://github.com/Pashtunzoy/algorithms-in-TypeScript#readme"
+}
