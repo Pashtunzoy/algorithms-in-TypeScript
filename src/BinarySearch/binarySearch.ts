@@ -1,6 +1,6 @@
-export default function binarySearch(arr, item) {
+export default function binarySearch(arr: number[] | string[], item: number|string): null|number {
     let low = 0;
-    let high = arr.length - 1;
+    let high: number = arr.length - 1;
 
     while (low <= high) {
         let mid = Math.floor((low + high) / 2);
@@ -12,6 +12,6 @@ export default function binarySearch(arr, item) {
         } else {
             low = mid + 1;
         }
-        return null;
     }
+    return null;
 }
