@@ -1,4 +1,4 @@
-export default function binarySearch(arr: number[] | string[], item: number|string, low: any = 0, high: any = 0) {
+export default function binarySearch(arr: number[] | string[], item: number|string, low: any = 0, high: any = 0): null|number {
     if (arr.length < 2) {
         return null;
     }
