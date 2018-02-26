@@ -11,10 +11,26 @@ test('Return the correct path as array value for the searched term', function (t
     const data = [
         {
             value: "Dandenong",
-            children: [1, 3, 4],
+            children: [4, 2],
+        },
+        {
+            value: "Narre Warren",
+            children: []
+        },
+        {
+            value: "Noble Park",
+            children: [3]
+        },
+        {
+            value: "Springvale",
+            children: []
+        },
+        {
+            value: "Dovton",
+            children: [1]
         }
     ];
 
-    t.equal(breadthFirstSearch(data, "Dovton"), []);
+    t.equal(breadthFirstSearch(data, "Dandenong", "Narre Warren"), ["Dandenong", "Doveton", "Narre Warren"]);
     t.end();
 });
