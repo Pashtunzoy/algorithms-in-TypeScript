@@ -7,13 +7,11 @@ interface DataItem {
 }
 interface DataItems extends Array<DataItem>{};
 
-export default function breadFirstSearch(data: DataItems, from: string, to: string) {
+export default function breadFirstSearch(data: DataItems, from: string, to: string): string {
     let foundDestination = [];
     let queue = [];
-
-    // Throws error when "from" and "to" are same
     if (from === to) {
-        throw Error("Your departing location cannot be same as the destination");
+        return "Your departing location cannot be same as the destination";
     }
 
     for (let i = 0, len = data.length; i < len; i += 1) {

@@ -1,6 +1,13 @@
 import * as test from 'tape';
 import quickSort from './quickSort';
 
+
+test('QuickSort Suite', function (t) {
+    console.log('QuickSort Suite');
+    t.end();
+});
+
+
 test('Export a function', function (t) {
     t.equal(typeof quickSort, 'function');
     t.end();

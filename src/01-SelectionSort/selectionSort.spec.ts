@@ -8,10 +8,17 @@ const setup = (): object => {
     return helper;
 };
 
-const teardown = (helper: object): void => {
-    delete helper['array1'];
-    delete helper['array2'];
+const teardown = (helper): void => {
+    for (let i of helper) {
+        delete helper[i];
+    }
 };
+
+
+test('SelectionSort Suite', function (t) {
+    console.log(`SelectionSort Suite`);
+    t.end();
+});
 
 test('SelectionSort exports a function', function(t) {
     t.equal(typeof selectionSort, 'function', 'selectionSort is a function');
