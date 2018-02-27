@@ -1,14 +1,9 @@
 import * as test from 'tape';
 import breadthFirstSearch from './breadthFirstSearch';
 
-test('Export a function', function (t) {
-    t.equal(typeof breadthFirstSearch, 'function');
-    t.end();
-});
-
-
-test('Return the correct path as array value for the searched term', function (t) {
-    const data = [
+const setup = (): object => {
+    const helper = {};
+    helper.data = [
         {
             value: "Dandenong",
             children: [4, 2],
@@ -30,7 +25,30 @@ test('Return the correct path as array value for the searched term', function (t
             children: [1]
         }
     ];
+    return helper;
+};
 
-    t.equal(breadthFirstSearch(data, "Dandenong", "Narre Warren"), ["Dandenong", "Doveton", "Narre Warren"]);
+const teardown = (helper: object): void => {
+    delete helper.data;
+};
+
+
+test('Export a function', function (t) {
+    t.equal(typeof breadthFirstSearch, 'function');
+    t.end();
+});
+
+test('Return the correct path as array value for the searched term', function (t) {
+    const helper = setup();
+    t.equal(breadthFirstSearch(helper.data, "Dandenong", "Narre Warren"), "Dandenong --> Dovton --> Narre Warren");
+    teardown(helper);
+    t.end();
+});
+
+
+test('Showed throw an error when departure is same as destination', function (t) {
+    const helper = setup();
+    t.throws(breadthFirstSearch(helper.data, "Dandenong", "Dandenong"), "Your departing location cannot be same as the destination");
+    teardown(helper);
     t.end();
 });

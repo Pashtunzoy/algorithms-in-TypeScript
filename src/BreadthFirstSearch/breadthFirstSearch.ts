@@ -2,55 +2,56 @@ interface DataItem {
         parentNode?: number|null;
         value: string;
         children: number[];
+        index: number;
         visited?: boolean;
 }
 interface DataItems extends Array<DataItem>{};
 
 export default function breadFirstSearch(data: DataItems, from: string, to: string) {
-    let searched: string[];
-    let finalResult: object[];
+    let foundDestination = [];
     let queue = [];
+
+    // Throws error when "from" and "to" are same
+    if (from === to) {
+        throw Error("Your departing location cannot be same as the destination");
+    }
+
     for (let i = 0, len = data.length; i < len; i += 1) {
         if (data[i].value === from) {
-            data[i]['visited'] = true;
-            data[i]['parentNode'] = null;
-            queue.push(data[i]);
+            data[i].parentNode = null;
+            data[i].visited = true;
+            data[i].index = i;
+            queue.push(i);
         }
-        data[i]['visited'] = false;
-        data[i]['parentNode'] = null;
+        data[i].visited = false;
+        data[i].index = i;
+        data[i].parentNode = null;
     }
-    for(let i = 0; i < queue.length; i += 1) {
-        let v = queue.pop();
-        if (v.value === to) {
-            finalResult.push(v.value);
-        } else if (!v.visited && v.children) {
-            console.log('here', v.children);
-            queue.concat(v.children);
+    // console.log(data[1]);
+    while (queue.length) {
+        let itemIndex = queue.shift();
+        if (data[itemIndex].children) {
+            data[itemIndex].children.forEach(function(i) {
+                data[i].parentNode = itemIndex;
+                if (!data[i].visited && data[i].value !== to) {
+                    data[i].visited = true;
+                    queue.push(i);
+                } else if (data[i].value === to) {
+                    data[i].visited = true;
+                    data[i].parentNode = itemIndex;
+                    foundDestination.push(data[i]);
+                }
+            });
         }
     }
-    return finalResult;
+    let finalPath = [];
+    for (let i = 0; i < data.length; i += 1) {
+        let destination = foundDestination[0];
+        if (destination && destination.parentNode > -1) {
+            finalPath.unshift(destination.value);
+            foundDestination.push(data[destination.parentNode]);
+            foundDestination.shift();
+        }
+    }
+    return finalPath.slice(',').join(' --> ');
 }
-
-// const data = [
-//     {
-//         value: "Dandenong",
-//         children: [4, 2],
-//     },
-//     {
-//         value: "Narre Warren",
-//         children: []
-//     },
-//     {
-//         value: "Noble Park",
-//         children: [3]
-//     },
-//     {
-//         value: "Springvale",
-//         children: []
-//     },
-//     {
-//         value: "Dovton",
-//         children: [1]
-//     }
-// ];
-// breadFirstSearch(data, "Dandenong", "Narre Warren")
