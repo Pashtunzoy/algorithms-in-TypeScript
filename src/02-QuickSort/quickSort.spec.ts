@@ -3,7 +3,7 @@ import quickSort from './quickSort';
 
 
 test('QuickSort Suite', function (t) {
-    console.log('QuickSort Suite');
+    console.log('/*QuickSort Suite*/');
     t.end();
 });
 
