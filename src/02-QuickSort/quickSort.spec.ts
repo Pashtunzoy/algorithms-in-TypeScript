@@ -20,6 +20,6 @@ test('Takes one arguments', function (t) {
 
 test('Should return the array sorted', function (t) {
     var array = [2, 3, 4, 5, 1, 6];
-    t.deepEqual(quickSort(array, 2, 5), [1, 2, 3, 4, 5, 6]);
+    t.deepEqual(quickSort(array), [1, 2, 3, 4, 5, 6]);
     t.end();
 });

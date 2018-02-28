@@ -7,8 +7,8 @@ const setup = (): object => {
         {
             // 0
             value: "Dandenong",
-            neighbours: [4, 2],
-            weights: {
+            weight: Infinity,
+            neighbours: {
                 2: 3,
                 4: 5,
             }
@@ -16,16 +16,16 @@ const setup = (): object => {
         {
             // 15
             value: "Narre Warren",
-            neighbours: [4],
-            weights: {
+            weight: Infinity,
+            neighbours: {
                 4: 9,
             }
         },
         {
             // 3
             value: "Noble Park",
-            neighbours: [0, 3],
-            weights: {
+            weight: Infinity,
+            neighbours: {
                 0: 3,
                 3: 6,
             }
@@ -33,16 +33,16 @@ const setup = (): object => {
         {
             // 9
             value: "Springvale",
-            neighbours: [2],
-            weights: {
+            weight: Infinity,
+            neighbours: {
                 2: 6,
             }
         },
         {
             // 5
             value: "Dovton",
-            neighbours: [0, 1],
-            weights: {
+            weight: Infinity,
+            neighbours: {
                 0: 5,
                 1: 9,
             }
@@ -68,9 +68,9 @@ test('Exported Dijkstra module is a function', function (t) {
     t.end();
 });
 
-test('By Providing the data and the starting point, it returns the shortest path to every point', function (t) {
+test('By Providing the data and the starting point, it returns the shortest path to end point', function (t) {
     const helper = setup();
-    t.deepEqual(dijkstra(helper['data'], "Dandenong"), {
+    t.deepEqual(dijkstra(helper['data'], "Dandenong", "Narre Warren"), {
         shortestPath: 3,
         paths: {
             0: 0,
