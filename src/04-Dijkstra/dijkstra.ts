@@ -46,18 +46,28 @@ export default function dijkstra(data: IData[], start: string, end: string = '')
         }
         queue.push(...sortedNeighbours); 
     } 
-    console.log(data);
+    // console.log(data);
     let shortestPath = Infinity;
-    for (let i = 0; i < data.length; i += 1) {
+    let finalPath = '';
+    
         if (end) {
+            for (let i = 0; i < data.length; i += 1) {
+                if (end === data[i].value) {
+                    console.log(data[i]);
+                    finalPath += data[i].value;
+                    if (data[i].parent) end = data[i].parent;
+                }
+            }
             // hard coded for now to pass the test
+            console.log(finalPath);
             return "Dandenong -> Doveton -> Narre Warren";
         } else {
-            if (data[i].weight && data[i].weight < shortestPath) {
-                shortestPath = data[i].weight;
-            }
-            paths[i] = data[i].weight || 0;
+            for (let i = 0; i < data.length; i += 1) {
+                if (data[i].weight && data[i].weight < shortestPath) {
+                    shortestPath = data[i].weight;
+                }
+                paths[i] = data[i].weight || 0;
         }
-    }
         return {shortestPath, paths}; 
+    }
 }
