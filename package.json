@@ -4,6 +4,7 @@
   "description": "Different kinds of algorithem in TypeScript",
   "main": "index.js",
   "dependencies": {
+    "npm": "^5.7.1",
     "tap-spec": "^4.1.1",
     "tape": "^4.8.0",
     "ts-node": "^4.1.0",
