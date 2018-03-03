@@ -40,7 +40,7 @@ const setup = (): object => {
         },
         {
             // 5
-            value: "Dovton",
+            value: "Doveton",
             weight: Infinity,
             neighbours: {
                 0: 5,
@@ -87,6 +87,13 @@ test('By Providing the data and the starting point, it should return the shortes
 test('By Providing the data and the starting point, it returns the shortest path to end point', function (t) {
     const helper = setup();
     t.deepEqual(dijkstra(helper['data'], "Dandenong", "Narre Warren"), "Dandenong -> Doveton -> Narre Warren");
+    teardown(helper);
+    t.end();
+});
+
+test('By Providing the data and the starting point, it returns the shortest path to end point', function (t) {
+    const helper = setup();
+    t.deepEqual(dijkstra(helper['data'], "Springvale", "Narre Warren"), "Narre Warren -> Doveton -> Dandenong");
     teardown(helper);
     t.end();
 });

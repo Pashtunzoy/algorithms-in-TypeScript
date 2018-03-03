@@ -49,21 +49,21 @@ export default function dijkstra(data: IData[], start: string, end: string = '')
     
     if (end) {
         let finalPath = [];
-        let parent = '';
-        finalPath.unshift(start);
-        finalPath.push(end);
-        for (let i = 0; i < data.length; i += 1) {
-            console.log(data[i]);
-            if (end === data[i].value) {
-                // console.log(data[i]);
-                end ===
-                finalPath.push(data[i].value);
-                end = data[i].parent;
+        let oldEnd = end;
+        for ( let i = 0; i < data.length; i += 1) {
+            if (data[i].parent) {
+                if (end === data[i].value && data[i].parent) {
+                    end = data[i].parent;
+                    if (oldEnd !== end && end !== start) {
+                        finalPath.push(end);
+                    }
+                }
             }
         }
-        console.log(finalPath.slice().join('-->'));
-        // hard coded for now to pass the test
-        return "Dandenong -> Doveton -> Narre Warren";
+        finalPath.push(oldEnd);
+        finalPath.unshift(start);
+        console.log(finalPath.slice().join(' -> '));
+        return finalPath.slice().join(' -> ');
     } else {
         let shortestPath = Infinity;
         for (let i = 0; i < data.length; i += 1) {
