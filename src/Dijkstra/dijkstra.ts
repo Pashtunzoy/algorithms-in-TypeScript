@@ -1,11 +1,15 @@
-class Dijkstra {
+// interface IDijkstra {
+//     findLowestNeighbour:
+// }
 
+class Dijkstra {
     private findLowestNeighbour(costs: object, visited: any[]) {
         let lowestCost = Infinity;
         let lowestCostNode = null;
         for (let n in costs) {
             let cost = costs[n];
-            if (cost < lowestCost && visited.includes(n)) {
+            if (cost < lowestCost && !visited.includes(n)) {
+                // console.log(cost, visited);
                 lowestCost = cost;
                 lowestCostNode = n;
             }
@@ -13,24 +17,41 @@ class Dijkstra {
         return lowestCostNode;
     }
 
-    getShorterDistance(data: any[], start: string, end: string) {
-        let parents: object;
-        let visited: string[];
-        let costs: object;
-        let graph: object;
-        for (let i = 0; i < data.length; i += 1) {
-            console.log(data[i]);
-            // console.log(data[i].neighbours);
-            graph[data[i].value] = data[i].neighbours;
-            if (data[i].value === end) {
-                for (let n in data[i].neighbours) {
-                    costs[n] = data[i].neighbours[n];
-                    parents[n] = start;
-                }
-                costs[end] = Infinity;
-                parents[end] = null;
-            }
-        }
+    getShorterDistance() {
+        let parents: object = { "a": "start", 'b': 'start', "end": '' };
+        let visited: string[] = [];
+        let costs: object = { 'a': 6, 'b': 2, 'end': Infinity };
+        let graph: object = {
+            'start': {
+                'a': 6,
+                'b': 2
+            },
+            'a': {
+                'end': 1
+            },
+            'b': {
+                'a': 3,
+                'end': 5
+            },
+            'end': {}
+        };
+        // for (let i = 0; i < data.length; i += 1) {
+        //     if (data[i].value === end) {
+        //         for (let n in data[i].neighbours) {
+        //             costs[n] = data[i].neighbours[n];
+        //             parents[n] = start;
+        //         }
+        //         costs[end] = 0;
+        //         parents[end] = null;
+        //         graph[data[i].value] = data[i].neighbours;
+        //     }
+        //     graph[data[i].value] = data[i].neighbours;
+        // }
+
+        // console.log(graph);
+        // console.log(parents);
+        // console.log(costs);
+
 
         let node = this.findLowestNeighbour(costs, visited);
         while (node) {
@@ -44,59 +65,45 @@ class Dijkstra {
                 }
             }
             visited.push(node);
-            node = this.findLowestNeighbour(data, visited);
+            node = this.findLowestNeighbour(costs, visited);
         }
-        return parents;
+        console.log('After Operation');
+        // console.log(graph);
+        console.log(costs);
+        // console.log(costs);
+        // console.log(visited);
+        return visited;
     }
 }
 
-const data = [
-    {
-        // 0
-        value: "Dandenong",
-        weight: 0,
-        neighbours: {
-            "Doveton": 5,
-            "Noble Park": 3,
-        }
-    },
-    {
-        // 15
-        value: "Narre Warren",
-        weight: 0,
-        neighbours: {
-            "Doveton": 9,
-        }
-    },
-    {
-        // 3
-        value: "Noble Park",
-        weight: 0,
-        neighbours: {
-            "Dandenong": 3,
-            "Springvale": 6
-        }
-    },
-    {
-        // 9
-        value: "Springvale",
-        weight: 0,
-        neighbours: {
-            "Noble Park": 6,
-        }
-    },
-    {
-        // 5
-        value: "Doveton",
-        weight: 0,
-        neighbours: {
-            "Dandneong": 5,
-            "Narre Warren": 9,
-        }
-    }
-];
 
+const data = {
+    // 0
+    "Dandenong": {
+        "Doveton": 5,
+        "Noble Park": 3,
+    },
+    // 15
+    "Narre Warren": {
+        "Doveton": 9,
+    },
+    // 3
+    "Noble Park": {
+        "Dandenong": 3,
+        "Springvale": 6
+    },
+    // 9
+    "Springvale": {
+        "Noble Park": 6,
+    },
+    // 5
+    "Doveton": {
+        "Dandneong": 5,
+        "Narre Warren": 9,
+    }
+};
+
+// dijkstra(data, "Narre Warren", "Springvale");
 const test = new Dijkstra();
 // console.log(test.getShorterDistance(data, "Dandenong", "Narre Warren"));
-console.log(test.getShorterDistance(data, "Dandenong", "Narre Warren"));
-
+test.getShorterDistance();
