@@ -1,4 +1,8 @@
+
+
 export default class Dijkstra {
+
+    // This method returns a vertex with the smallest value in the weights object
     private findSmallestNeighbour(weights: object, visited: string[]): string {
         let smallestWeight = Infinity;
         let smallestWeightVertex = null;
@@ -12,8 +16,10 @@ export default class Dijkstra {
         return smallestWeightVertex;
     }
 
+    // The main method that returns the shortest paths and all paths from the starting posotion
     getShorterDistance(data: any, start: string, end: string = '') {
 
+        // Putting some precaution for some edge cases
         if (!data || data.length < 2 || !start) {
             return 'Please insert the correct input value';
         }
