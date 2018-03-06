@@ -1,10 +1,24 @@
 interface IDijkstra {
     getShorterDistance(data: object[], start: string, end?: string): string | object;
 }
-
+/**
+ * The main implemantation of the algorithm in the form of the new class style. It returns either a key-value pair of each vertex's wieght from the point of view of the start element
+ * 
+ * @export
+ * @class Dijkstra
+ * @implements {IDijkstra} the interface which includes the only public method
+ */
 export default class Dijkstra implements IDijkstra {
 
-    // This method returns a vertex with the smallest value in the weights object
+    /**
+     * This method returns a vertex with the smallest value in the weights object
+     * 
+     * @private
+     * @param {object} weights - Key-value pair object, it includes the weights of vertex as neighbours of the current vertex
+     * @param {string[]} visited - Array of all the keys who has been traversed 
+     * @returns {string} - Returns the node key that has the smallest weight of weights object
+     * @memberof Dijkstra
+     */
     private findSmallestNeighbour(weights: object, visited: string[]): string {
         let smallestWeight = Infinity;
         let smallestWeightVertex = null;
@@ -18,7 +32,15 @@ export default class Dijkstra implements IDijkstra {
         return smallestWeightVertex;
     }
 
-    // The main method that returns the shortest paths and all paths from the starting posotion
+    /**
+     * The main method that returns the shortest paths and all paths from the starting posotion
+     * 
+     * @param {*} data - An array with objects with {vertex: {neighbours: weights}}
+     * @param {string} start - This is the starting key from where we begin our search
+     * @param {string} [end=''] - The end param is optional but if present, if present it will return string, instead of object with key-value pair.
+     * @returns {(string | object)} - If end is present then it return string in the formate of start -> ... -> end and if not then will return an object with calculated distances from the start point of view. 
+     * @memberof Dijkstra
+     */
     getShorterDistance(data: any, start: string, end: string = ''): string | object {
 
         // Putting some precaution for some edge cases
@@ -83,8 +105,18 @@ export default class Dijkstra implements IDijkstra {
         // if no end then reuturn the all weights with their corrosponding values
         return weights;
     }
-
-    private generatePath(weights, parents, start, end): string {
+/**
+ * Will generate a path if the end value exist and is called form the getShortDistance method
+ * 
+ * @private
+ * @param {any} weights - Includes all of the waits the getShorterDistance method calculated based on the start value
+ * @param {any} parents - The parents of each vertex in key-value pair formate
+ * @param {any} start - This is the start key from where the weights and parents object are generated
+ * @param {any} end - This whole method is run becaus of the end value, if it is present we will return a stirng. 
+ * @returns {string} - The string returning will be the same as the return string value of getShorterDistance method as it return there after it has been calculated in here.
+ * @memberof Dijkstra
+ */
+private generatePath(weights, parents, start, end): string {
         let finalPath = [];
         while (weights) {
             for (let i in weights) {
