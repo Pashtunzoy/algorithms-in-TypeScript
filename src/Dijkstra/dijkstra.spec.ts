@@ -64,14 +64,21 @@ test('Exported Dijkstra module is an function object', function (t) {
     t.end();
 });
 
-test('By Providing the data and the starting point, it returns the shortest path to end point', function (t) {
+test('Return a message istead of the desired result, if incorrect values are passed to the Dijksra algorithm', function (t) {
+    const helper = setup();
+    t.deepEqual(helper['dijkstra'].getShorterDistance([], "Narre Warren", "Dandenong"), 'Please insert the correct input value');
+    teardown(helper);
+    t.end();
+});
+
+test('By Providing the data and a start and an end point, it returns a string with formate of start -> ... -> end', function (t) {
     const helper = setup();
     t.deepEqual(helper['dijkstra'].getShorterDistance(helper['data'], "Dandenong", "Narre Warren"), "Dandenong -> Doveton -> Narre Warren");
     teardown(helper);
     t.end();
 });
 
-test('By Providing the data and the starting point, it should return the shortest Path and also paths of all data', function (t) {
+test('By Providing the data and a start point, it should return all possible paths from the start value', function (t) {
     const helper = setup();
     t.deepEqual(helper['dijkstra'].getShorterDistance(helper['data'], "Dandenong"), {
         'Doveton': 5,
@@ -84,23 +91,16 @@ test('By Providing the data and the starting point, it should return the shortes
     t.end();
 });
 
-test('By Providing the data and the starting point, it returns the shortest path to end point', function (t) {
+test('Providing "Springvale" as start and "Narre Warren" as end, it returns a string with formate of "Springvale -> ... -> Narre Warren"', function (t) {
     const helper = setup();
     t.deepEqual(helper['dijkstra'].getShorterDistance(helper['data'], "Springvale", "Narre Warren"), "Springvale -> Noble Park -> Dandenong -> Doveton -> Narre Warren");
     teardown(helper);
     t.end();
 });
 
-test('By Providing the data and the starting point, it returns the shortest path to end point last one', function (t) {
+test('Providing "Narre Warren" as start and "Dandenong" as end, it returns a string with formate of "Narre Warren -> ... -> Dandenong"', function (t) {
     const helper = setup();
     t.deepEqual(helper['dijkstra'].getShorterDistance(helper['data'], "Narre Warren", "Dandenong"), "Narre Warren -> Doveton -> Dandenong");
-    teardown(helper);
-    t.end();
-});
-
-test('Return a message if incorrect values are passed to the Dijksra algorithm', function (t) {
-    const helper = setup();
-    t.deepEqual(helper['dijkstra'].getShorterDistance([], "Narre Warren", "Dandenong"), 'Please insert the correct input value');
     teardown(helper);
     t.end();
 });
