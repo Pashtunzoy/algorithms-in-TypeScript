@@ -14,7 +14,7 @@ export default class Dijkstra {
 
     getShorterDistance(data: any, start: string, end: string = '') {
 
-        if (!data && !start) {
+        if (!data || data.length < 2 || !start) {
             return 'Please insert the correct input value';
         }
         // parents will include the parents of all items and will be used for backtracking to find the path of a specific vertex

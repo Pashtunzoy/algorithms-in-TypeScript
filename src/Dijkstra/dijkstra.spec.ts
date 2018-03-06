@@ -97,3 +97,10 @@ test('By Providing the data and the starting point, it returns the shortest path
     teardown(helper);
     t.end();
 });
+
+test('Return a message if incorrect values are passed to the Dijksra algorithm', function (t) {
+    const helper = setup();
+    t.deepEqual(helper['dijkstra'].getShorterDistance([], "Narre Warren", "Dandenong"), 'Please insert the correct input value');
+    teardown(helper);
+    t.end();
+});
