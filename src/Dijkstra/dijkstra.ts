@@ -1,6 +1,8 @@
+interface IDijkstra {
+    getShorterDistance(data: object[], start: string, end?: string): string | object;
+}
 
-
-export default class Dijkstra {
+export default class Dijkstra implements IDijkstra {
 
     // This method returns a vertex with the smallest value in the weights object
     private findSmallestNeighbour(weights: object, visited: string[]): string {
@@ -17,7 +19,7 @@ export default class Dijkstra {
     }
 
     // The main method that returns the shortest paths and all paths from the starting posotion
-    getShorterDistance(data: any, start: string, end: string = '') {
+    getShorterDistance(data: any, start: string, end: string = ''): string | object {
 
         // Putting some precaution for some edge cases
         if (!data || data.length < 2 || !start) {
@@ -82,7 +84,7 @@ export default class Dijkstra {
         return weights;
     }
 
-    private generatePath(weights, parents, start, end) {
+    private generatePath(weights, parents, start, end): string {
         let finalPath = [];
         while (weights) {
             for (let i in weights) {
