@@ -1,109 +1,95 @@
-// interface IDijkstra {
-//     findLowestNeighbour:
-// }
-
-class Dijkstra {
-    private findLowestNeighbour(costs: object, visited: any[]) {
-        let lowestCost = Infinity;
-        let lowestCostNode = null;
-        for (let n in costs) {
-            let cost = costs[n];
-            if (cost < lowestCost && !visited.includes(n)) {
-                // console.log(cost, visited);
-                lowestCost = cost;
-                lowestCostNode = n;
+export default class Dijkstra {
+    private findSmallestNeighbour(weights: object, visited: string[]): string {
+        let smallestWeight = Infinity;
+        let smallestWeightVertex = null;
+        for (let w in weights) {
+            let weight = weights[w];
+            if (weight < smallestWeight && !visited.includes(w)) {
+                smallestWeight = weight;
+                smallestWeightVertex = w;
             }
         }
-        return lowestCostNode;
+        return smallestWeightVertex;
     }
 
-    getShorterDistance() {
-        let parents: object = { "a": "start", 'b': 'start', "end": '' };
+    getShorterDistance(data: any, start: string, end: string = '') {
+
+        if (!data && !start) {
+            return 'Please insert the correct input value';
+        }
+        // parents will include the parents of all items and will be used for backtracking to find the path of a specific vertex
+        const parents = {};
+
+        // visited is initially empty but will include every node that is visited
         let visited: string[] = [];
-        let costs: object = { 'a': 6, 'b': 2, 'end': Infinity };
-        let graph: object = {
-            'start': {
-                'a': 6,
-                'b': 2
-            },
-            'a': {
-                'end': 1
-            },
-            'b': {
-                'a': 3,
-                'end': 5
-            },
-            'end': {}
-        };
-        // for (let i = 0; i < data.length; i += 1) {
-        //     if (data[i].value === end) {
-        //         for (let n in data[i].neighbours) {
-        //             costs[n] = data[i].neighbours[n];
-        //             parents[n] = start;
-        //         }
-        //         costs[end] = 0;
-        //         parents[end] = null;
-        //         graph[data[i].value] = data[i].neighbours;
-        //     }
-        //     graph[data[i].value] = data[i].neighbours;
-        // }
+        
+        // Will include the weights of every item from the starting point
+        const weights = {};
 
-        // console.log(graph);
-        // console.log(parents);
-        // console.log(costs);
+        // To formate data e.g. {vertex:{neighbours}, ...}
+        const graph = {};
 
-
-        let node = this.findLowestNeighbour(costs, visited);
-        while (node) {
-            let cost = costs[node];
-            let neighbours = graph[node];
-            for (let n in neighbours) {
-                let newCost = cost + neighbours[n];
-                if (cost[n] > newCost) {
-                    costs[n] = newCost;
-                    parents[n] = node;
+        // Fills the graph, parents and weights object
+        for (let i = 0; i < data.length; i += 1) {
+            graph[data[i].value] = data[i].neighbours;
+            for (let n in data[i].neighbours) {
+                if (data[i].value === start) {
+                    weights[n] = data[i].neighbours[n];
+                    parents[n] = data[i].value;
+                } else if (!weights[data[i].value]) {
+                    weights[data[i].value] = Infinity;
                 }
             }
-            visited.push(node);
-            node = this.findLowestNeighbour(costs, visited);
+            weights[start] = 0;
+            parents[end] = null;
         }
-        console.log('After Operation');
-        // console.log(graph);
-        console.log(costs);
-        // console.log(costs);
-        // console.log(visited);
-        return visited;
+
+        // Will return the intial shortest value from the private method, to start the algorithm with
+        console.log();
+        
+        let vertex = this.findSmallestNeighbour(weights, visited);
+
+        // Searches through the weights and vertices and finds the new weights for each vertex if smaller than current weight
+        while (vertex) {
+            let weight = weights[vertex];
+            let neighbours = graph[vertex];
+            for (let n in neighbours) {
+                let newWeight = weight + neighbours[n];
+                if (weights[n] > newWeight) {
+                    weights[n] = newWeight;
+                    parents[n] = vertex;
+                }
+            }
+            visited.push(vertex);
+            vertex = this.findSmallestNeighbour(weights, visited);
+        }
+
+        parents[start] = null;
+
+        // If end value exists then formate the return value to "start -> ... -> end"
+        if (end) {
+            console.log(weights);
+            return this.generatePath(weights, parents, start, end);
+        }
+
+        // if no end then reuturn the all weights with their corrosponding values
+        return weights;
+    }
+
+    private generatePath(weights, parents, start, end) {
+        let finalPath = [];
+        while (weights) {
+            for (let i in weights) {
+                if (i === end) {
+                    finalPath.unshift(i);
+                    end = parents[i];
+                    delete weights[i];
+                } else if (!end) {
+                    break;
+                }
+            }
+            if (finalPath.includes(start)) break;
+        }
+        return finalPath.slice().join(' -> ');
     }
 }
-
-
-const data = {
-    // 0
-    "Dandenong": {
-        "Doveton": 5,
-        "Noble Park": 3,
-    },
-    // 15
-    "Narre Warren": {
-        "Doveton": 9,
-    },
-    // 3
-    "Noble Park": {
-        "Dandenong": 3,
-        "Springvale": 6
-    },
-    // 9
-    "Springvale": {
-        "Noble Park": 6,
-    },
-    // 5
-    "Doveton": {
-        "Dandneong": 5,
-        "Narre Warren": 9,
-    }
-};
-
-// dijkstra(data, "Narre Warren", "Springvale");
-const test = new Dijkstra();
-// console.log(test.getShorterDistance(data, "Dandenong", "Narre Warren"));
-test.getShorterDistance();

@@ -1,5 +1,5 @@
 import * as test from 'tape';
-import dijkstra from './dijkstra';
+import Dijkstra from './dijkstra';
 
 const setup = (): object => {
     const helper = {};
@@ -7,16 +7,14 @@ const setup = (): object => {
         {
             // 0
             value: "Dandenong",
-            weight: 0,
             neighbours: {
                 "Doveton": 5,
                 "Noble Park": 3,
             }
         },
         {
-            // 15
+            // 14
             value: "Narre Warren",
-            weight: 0,
             neighbours: {
                 "Doveton": 9,
             }
@@ -24,7 +22,6 @@ const setup = (): object => {
         {
             // 3
             value: "Noble Park",
-            weight: 0,
             neighbours: {
                 "Dandenong": 3,
                 "Springvale": 6
@@ -33,7 +30,6 @@ const setup = (): object => {
         {
             // 9
             value: "Springvale",
-            weight: 0,
             neighbours: {
                 "Noble Park": 6,
             }
@@ -41,13 +37,13 @@ const setup = (): object => {
         {
             // 5
             value: "Doveton",
-            weight: 0,
             neighbours: {
-                "Dandneong": 5,
+                "Dandenong": 5,
                 "Narre Warren": 9,
             }
         }
     ];
+    helper["dijkstra"] = new Dijkstra();
     return helper;
 };
 
@@ -63,44 +59,41 @@ test('Dijkstra Suite', function(t) {
 });
 
 
-test('Exported Dijkstra module is a function', function (t) {
-    t.equal(typeof dijkstra, 'function');
+test('Exported Dijkstra module is an function object', function (t) {
+    t.equal(typeof Dijkstra, 'function');
     t.end();
 });
 
-// test('By Providing the data and the starting point, it should return the shortest Path and also paths of all data', function (t) {
-//     const helper = setup();
-//     t.deepEqual(dijkstra(helper['data'], "Dandenong"), {
-//         shortestPath: 3,
-//         paths: {
-//             0: 0,
-//             1: 14,
-//             2: 3,
-//             3: 9,
-//             4: 5,
-//         }
-//     });
-//     teardown(helper);
-//     t.end();
-// });
-
 test('By Providing the data and the starting point, it returns the shortest path to end point', function (t) {
     const helper = setup();
-    t.deepEqual(dijkstra(helper['data'], "Dandenong", "Narre Warren"), "Dandenong -> Doveton -> Narre Warren");
+    t.deepEqual(helper['dijkstra'].getShorterDistance(helper['data'], "Dandenong", "Narre Warren"), "Dandenong -> Doveton -> Narre Warren");
+    teardown(helper);
+    t.end();
+});
+
+test('By Providing the data and the starting point, it should return the shortest Path and also paths of all data', function (t) {
+    const helper = setup();
+    t.deepEqual(helper['dijkstra'].getShorterDistance(helper['data'], "Dandenong"), {
+        'Doveton': 5,
+        'Noble Park': 3,
+        'Dandenong': 0,
+        'Narre Warren': 14,
+        'Springvale': 9
+    });
     teardown(helper);
     t.end();
 });
 
 test('By Providing the data and the starting point, it returns the shortest path to end point', function (t) {
     const helper = setup();
-    t.deepEqual(dijkstra(helper['data'], "Springvale", "Narre Warren"), "Springvale -> Noble Park -> Dandenong -> Doveton -> Narre Warren");
+    t.deepEqual(helper['dijkstra'].getShorterDistance(helper['data'], "Springvale", "Narre Warren"), "Springvale -> Noble Park -> Dandenong -> Doveton -> Narre Warren");
     teardown(helper);
     t.end();
 });
 
-test('By Providing the data and the starting point, it returns the shortest path to end point', function (t) {
+test('By Providing the data and the starting point, it returns the shortest path to end point last one', function (t) {
     const helper = setup();
-    t.deepEqual(dijkstra(helper['data'], "Narre Warren", "Dandenong"), "Narre Warren -> Doveton -> Dandenong");
+    t.deepEqual(helper['dijkstra'].getShorterDistance(helper['data'], "Narre Warren", "Dandenong"), "Narre Warren -> Doveton -> Dandenong");
     teardown(helper);
     t.end();
 });
