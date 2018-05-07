@@ -11,5 +11,5 @@
 * Quick Sort
 * Binary Search
 * Breadth First Search(BFS)
-* Dijkstra(WIP)
-* Greedy Algorithm(WIP)
+* Dijkstra
+* Greedy/Approximation Algorithm(WIP)
